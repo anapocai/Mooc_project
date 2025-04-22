@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import io
 import base64
 
-# ===== 读取 CSV 文件并整理数据 =====
+# ===== read csv =====
 file_names = [
     "2019_data.csv",
     "2020_data.csv",
@@ -18,9 +18,9 @@ file_names = [
 dataframes = [pd.read_csv(f) for f in file_names]
 full_df = pd.concat(dataframes, ignore_index=True)
 
-# 提取币种代码列表
+# get currency list
 list1 = full_df["Ticker"].unique().tolist()
-list2 = [i[:3] for i in list1]  # 提取前三个字符作为货币代码
+list2 = [i[:3] for i in list1]
 
 Initial = [
     69.709999,
@@ -37,7 +37,7 @@ Initial = [
 
 list3 = [full_df[full_df["Ticker"] == ticker].copy() for ticker in list1]
 
-# 整合数据
+# merge
 all_data = []
 for i in range(len(list3)):
     df = list3[i].copy()
@@ -53,7 +53,7 @@ for i in range(len(list3)):
 
 all_df = pd.concat(all_data, ignore_index=True)
 
-# ===== 创建 Dash 应用 =====
+# ===== create dash =====
 app = Dash(__name__)
 app.title = "Currency Dashboard"
 
