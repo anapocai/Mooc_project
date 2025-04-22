@@ -195,13 +195,9 @@ def plot_volatility(currencies):
     return fig
 
 
-@app.callback(Output("std-bar-image", "src"), Input("dropdown-bar", "value"))
-def update_bar(currencies):
-    subset = all_df[
-        (all_df["Currency"].isin(currencies))
-        & (all_df["Date"] >= "2020-01-01")
-        & (all_df["Date"] <= "2022-12-31")
-    ]
+@app.callback(Output("std-bar-image", "src"), Input("origin-graph", "figure"))
+def update_bar(_):
+    subset = all_df[(all_df["Date"] >= "2020-01-01") & (all_df["Date"] <= "2022-12-31")]
     std_vals = subset.groupby("Currency")["Relative"].std().sort_values(ascending=True)
 
     plt.figure(figsize=(10, 6))
